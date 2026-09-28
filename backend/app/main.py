@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import ROUTERS
+from app.services.permit import PermitService
 from app.store import store
 
 app = FastAPI(title="机场地面保障调度平台", version="1.0.0")
@@ -35,4 +36,6 @@ def health() -> dict[str, object]:
 @app.get("/api/overview")
 def overview() -> dict[str, object]:
     """运营概览：把各业务模块的待处理量汇总成看板卡片。"""
+    # 统计前先按当前日期落定通行证件的到期状态，保证看板与证件列表口径一致
+    PermitService().normalize_all()
     return store.overview()
