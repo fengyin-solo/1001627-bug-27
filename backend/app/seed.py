@@ -1,7 +1,15 @@
 """示例数据：每个模块给几条不同状态的记录，方便起服务后立刻看到内容。"""
 from __future__ import annotations
 
+from datetime import date, timedelta
 from typing import Any
+
+
+TODAY = date.today()
+
+
+def _offset_date(days: int) -> str:
+    return (TODAY + timedelta(days=days)).isoformat()
 
 SEED_ROWS: dict[str, list[dict[str, Any]]] = {
     "flight": [{'id': 1,
@@ -442,36 +450,36 @@ SEED_ROWS: dict[str, list[dict[str, Any]]] = {
   'abnormal': False,
   '证件编号': 'PERM-0001',
   '持证人员': '通行证件样例1',
-  '所属单位': '通行证件样例1',
-  '通行区域': '通行证件样例1',
-  '有效期至': '通行证件样例1',
-  '发证人员': '通行证件样例1',
-  '发证日期': '2026-09-01',
-  '证件状态': '通行证件样例1'},
+  '所属单位': '机坪保障一部',
+  '通行区域': '国内机坪',
+  '有效期至': _offset_date(30),
+  '发证人员': '',
+  '发证日期': '',
+  '证件状态': '待发证'},
  {'id': 2,
   'status': '有效使用',
-  'pending': True,
-  'abnormal': True,
+  'pending': False,
+  'abnormal': False,
   '证件编号': 'PERM-0002',
   '持证人员': '通行证件样例2',
-  '所属单位': '通行证件样例2',
-  '通行区域': '通行证件样例2',
-  '有效期至': '通行证件样例2',
-  '发证人员': '通行证件样例2',
-  '发证日期': '2026-09-02',
-  '证件状态': '通行证件样例2'},
+  '所属单位': '机坪保障二部',
+  '通行区域': '国际机坪',
+  '有效期至': _offset_date(60),
+  '发证人员': '值班管理员',
+  '发证日期': _offset_date(-10),
+  '证件状态': '有效使用'},
  {'id': 3,
   'status': '已过期',
   'pending': False,
-  'abnormal': False,
+  'abnormal': True,
   '证件编号': 'PERM-0003',
   '持证人员': '通行证件样例3',
-  '所属单位': '通行证件样例3',
-  '通行区域': '通行证件样例3',
-  '有效期至': '通行证件样例3',
-  '发证人员': '通行证件样例3',
-  '发证日期': '2026-09-03',
-  '证件状态': '通行证件样例3'}],
+  '所属单位': '机坪保障一部',
+  '通行区域': '国内机坪',
+  '有效期至': _offset_date(-7),
+  '发证人员': '值班管理员',
+  '发证日期': _offset_date(-37),
+  '证件状态': '已过期'}],
     "gse": [{'id': 1,
   'status': '待保养',
   'pending': True,

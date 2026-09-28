@@ -27,10 +27,13 @@ class Store:
                 return row
         return None
 
-    def overview(self) -> dict[str, object]:
+    def overview(
+        self,
+        module_rows: dict[str, list[dict[str, Any]]] | None = None,
+    ) -> dict[str, object]:
         modules: list[dict[str, object]] = []
         for name in self.module_names():
-            rows = self.rows(name)
+            rows = (module_rows or {}).get(name, self.rows(name))
             modules.append({
                 "name": name,
                 "created": len(rows),

@@ -5,12 +5,16 @@
 """
 from __future__ import annotations
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.access import AccessContext, get_access_context
 from app.config import settings
 from app.routers import ROUTERS
+from app.services.permit import PermitService
 from app.store import store
+
+permit_service = PermitService()
 
 app = FastAPI(title="机场地面保障调度平台", version="1.0.0")
 
@@ -33,6 +37,7 @@ def health() -> dict[str, object]:
 
 
 @app.get("/api/overview")
-def overview() -> dict[str, object]:
+def overview(access_context: AccessContext = Depends(get_access_context)) -> dict[str, object]:
     """运营概览：把各业务模块的待处理量汇总成看板卡片。"""
-    return store.overview()
+    permit_rows = permit_service.visible_rows(access_context)
+    return store.overview({"permit": permit_rows})

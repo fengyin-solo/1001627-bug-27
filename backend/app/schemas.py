@@ -13,6 +13,7 @@ class PageResult(BaseModel, Generic[T]):
     total: int
     page: int = 1
     size: int = 20
+    stats: dict[str, int] | None = None
 
 
 class ActionResult(BaseModel):

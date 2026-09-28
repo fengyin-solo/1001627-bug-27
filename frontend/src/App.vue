@@ -11,7 +11,7 @@
     <main class="app-main">
       <header class="app-head">
         <span class="head-desc">面向机场机坪运行的航班保障、机位资源、廊桥对接、除冰加注、行李装卸与保障结算的一体化地面调度后台。</span>
-        <span class="head-user">当前值班：{{ store.operator }} · {{ store.shiftLabel }}</span>
+        <span class="head-user">当前值班：{{ store.operator }} · {{ store.scope }} · {{ store.shiftLabel }}</span>
       </header>
       <RouterView />
     </main>
